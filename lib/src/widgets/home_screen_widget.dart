@@ -6,6 +6,7 @@ import '../widgets/search_and_filters.dart';
 import '../widgets/podcast_card.dart';
 import '../widgets/category_selector_row.dart';
 import '../models/category.dart';
+import '../widgets/now_playing_screen_widget.dart';
 
 class HomeScreenWidget extends StatefulWidget {
   @override
@@ -140,7 +141,18 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                     podcast: podcast,
                                     backgroundColor:
                                         colors[index % colors.length],
-                                    onTap: () => homeVM.selectPodcast(podcast),
+                                    onTap: () {
+                                      homeVM.selectPodcast(podcast);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (_) => NowPlayingScreenWidget(
+                                                podcast: podcast,
+                                              ),
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
                               ),
