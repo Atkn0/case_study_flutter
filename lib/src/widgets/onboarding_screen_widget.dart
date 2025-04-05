@@ -97,7 +97,11 @@ class OnboardingScreenWidget extends StatelessWidget {
                     );
                   }
                 },
-                child: Text('Next'),
+                child: Text(
+                  onboardingVM.currentIndex < onboardingVM.totalPages - 1
+                      ? 'Next'
+                      : 'Continue',
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
                   minimumSize: Size(double.infinity, 48),
