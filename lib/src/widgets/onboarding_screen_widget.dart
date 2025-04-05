@@ -97,18 +97,19 @@ class OnboardingScreenWidget extends StatelessWidget {
                     );
                   }
                 },
-                child: Text(
-                  onboardingVM.currentIndex < onboardingVM.totalPages - 1
-                      ? 'Next'
-                      : 'Continue',
-                ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
-                  minimumSize: Size(double.infinity, 48),
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  padding: EdgeInsets.all(12),
+                  minimumSize: Size(60, 60),
                 ),
+                child: Icon(Icons.arrow_forward, color: Color(0xFF525298)),
               ),
             ),
           ),
+
           SizedBox(height: 16),
         ],
       ),
