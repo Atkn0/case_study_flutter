@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 
 class OnboardingViewModel extends ChangeNotifier {
-  bool isLoading = false;
-  String? errorMessage;
-  int currentPage = 0;
+  PageController pageController = PageController();
+  int currentIndex = 0;
   int totalPages = 3;
 
-  void initOnboarding() {
-    isLoading = true;
-    isLoading = false;
+  void onPageChanged(int index) {
+    currentIndex = index;
     notifyListeners();
   }
 
-  void onSkip() {
+  void nextPage() {
+    if (currentIndex < totalPages - 1) {
+      pageController.nextPage(
+        duration: Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    }
+  }
+
+  void skip() {
+    currentIndex = totalPages - 1;
+    pageController.jumpToPage(currentIndex);
     notifyListeners();
   }
 
