@@ -9,16 +9,43 @@ class OnboardingScreenWidget extends StatelessWidget {
     final onboardingVM = Provider.of<OnboardingViewModel>(context);
     return Scaffold(
       appBar: AppBar(title: Text('Onboarding')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: PageView(
+        controller: onboardingVM.pageController,
+        onPageChanged: onboardingVM.onPageChanged,
+        children: [
+          Container(
+            color: Colors.redAccent,
+            child: Center(child: Text('Onboarding Page 1')),
+          ),
+          Container(
+            color: Colors.greenAccent,
+            child: Center(child: Text('Onboarding Page 2')),
+          ),
+          Container(
+            color: Colors.blueAccent,
+            child: Center(child: Text('Onboarding Page 3')),
+          ),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Onboarding Page ${onboardingVM.currentPage + 1}'),
             ElevatedButton(
               onPressed: () {
-                if (onboardingVM.currentPage < onboardingVM.totalPages - 1) {
-                  onboardingVM.currentPage++;
-                  onboardingVM.notifyListeners();
+                onboardingVM.skip();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreenWidget()),
+                );
+              },
+              child: Text('Skip'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (onboardingVM.currentIndex < onboardingVM.totalPages - 1) {
+                  onboardingVM.nextPage();
                 } else {
                   onboardingVM.onDone();
                   Navigator.pushReplacement(
@@ -28,16 +55,6 @@ class OnboardingScreenWidget extends StatelessWidget {
                 }
               },
               child: Text('Next'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                onboardingVM.onSkip();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreenWidget()),
-                );
-              },
-              child: Text('Skip'),
             ),
           ],
         ),
