@@ -9,7 +9,7 @@ class OnboardingScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final onboardingVM = Provider.of<OnboardingViewModel>(context);
     return Scaffold(
-      backgroundColor: Color(0xFF1E1E1E),
+      backgroundColor: const Color(0xFF1F1D2B),
       body: Column(
         children: [
           Expanded(
