@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'widgets/onboarding_screen_widget.dart';
+import 'views/onboarding_screen.dart';
 
 class MyApp extends StatelessWidget {
   @override

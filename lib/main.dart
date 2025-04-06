@@ -15,7 +15,6 @@ void main() {
         ChangeNotifierProvider(create: (_) => OnboardingViewModel()),
         ChangeNotifierProvider(create: (_) => HomeViewModel()),
         ChangeNotifierProvider(create: (_) => LibraryViewModel()),
-        ChangeNotifierProvider(create: (_) => NowPlayingViewModel()),
       ],
       child: MyApp(),
     ),
