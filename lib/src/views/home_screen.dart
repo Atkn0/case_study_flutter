@@ -5,6 +5,8 @@ import '../widgets/home/home_body.dart';
 import '../widgets/home/home_drawer.dart';
 import '../widgets/home/home_app_bar.dart';
 import '../widgets/home/home_bottom_nav_bar.dart';
+import '../widgets/home/home_app_bar.dart';
+import '../widgets/home/home_bottom_nav_bar.dart';
 
 class HomeScreenWidget extends StatefulWidget {
   @override
@@ -13,7 +15,6 @@ class HomeScreenWidget extends StatefulWidget {
 
 class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   final TextEditingController _searchController = TextEditingController();
-  final FocusNode _searchFocusNode = FocusNode();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -26,16 +27,22 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Future.delayed(Duration.zero, () {
+      FocusScope.of(context).requestFocus(FocusNode());
+    });
+  }
+
+  @override
   void dispose() {
     _searchController.dispose();
-    _searchFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: _scaffoldKey,
         backgroundColor: const Color(0xFF1F1D2B),
@@ -45,10 +52,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         drawer: const HomeDrawer(),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: HomeBody(
-            searchController: _searchController,
-            searchFocusNode: _searchFocusNode,
-          ),
+          child: HomeBody(searchController: _searchController),
         ),
         bottomNavigationBar: HomeBottomNavBar(currentIndex: 0, onTap: (_) {}),
       ),

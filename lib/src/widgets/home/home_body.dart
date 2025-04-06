@@ -9,12 +9,7 @@ import 'podcast_grid.dart';
 
 class HomeBody extends StatelessWidget {
   final TextEditingController searchController;
-  final FocusNode searchFocusNode;
-
-  const HomeBody({
-    required this.searchController,
-    required this.searchFocusNode,
-  });
+  const HomeBody({required this.searchController});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +26,6 @@ class HomeBody extends StatelessWidget {
       children: [
         SearchBarWidget(
           controller: searchController,
-          focusNode: searchFocusNode,
           onChanged: (value) => homeVM.searchPodcasts(value),
         ),
         const SizedBox(height: 16),

@@ -4,6 +4,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import '../viewmodels/onboarding_viewmodel.dart';
 import '../models/onboarding_item.dart';
 import 'home_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OnboardingScreenWidget extends StatelessWidget {
   @override
@@ -90,14 +91,19 @@ class OnboardingScreenWidget extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   padding: const EdgeInsets.all(12),
-                  minimumSize: const Size(60, 60),
+                  minimumSize: const Size(70, 50),
                 ),
-                child: const Icon(
-                  Icons.arrow_forward,
-                  color: Color(0xFF525298),
+                child: SvgPicture.asset(
+                  'assets/icons/onboarding_arrow.svg',
+                  height: 24,
+                  width: 24,
+                  colorFilter: const ColorFilter.mode(
+                    Color(0xFF525298),
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ),

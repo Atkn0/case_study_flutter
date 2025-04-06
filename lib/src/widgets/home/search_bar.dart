@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatelessWidget {
   final TextEditingController controller;
-  final FocusNode? focusNode;
   final Function(String) onChanged;
 
-  const SearchBarWidget({
-    required this.controller,
-    this.focusNode,
-    required this.onChanged,
-  });
+  const SearchBarWidget({required this.controller, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +19,9 @@ class SearchBarWidget extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
-              autofocus: false,
-              focusNode: focusNode,
               controller: controller,
               onChanged: onChanged,
+              autofocus: false,
               style: const TextStyle(color: Colors.white, fontSize: 14),
               cursorColor: Colors.white,
               decoration: const InputDecoration(

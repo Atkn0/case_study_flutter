@@ -125,7 +125,7 @@ class NowPlayingScreenWidget extends StatelessWidget {
                       Container(
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white,
+                          color: Color(0xFF2F3142),
                         ),
                         child: IconButton(
                           iconSize: 36,
@@ -133,7 +133,7 @@ class NowPlayingScreenWidget extends StatelessWidget {
                             viewModel.isPlaying
                                 ? Icons.pause
                                 : Icons.play_arrow,
-                            color: const Color(0xFF121212),
+                            color: Colors.white,
                           ),
                           onPressed: () {
                             viewModel.isPlaying
