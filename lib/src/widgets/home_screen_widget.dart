@@ -6,6 +6,7 @@ import '../widgets/search_and_filters.dart';
 import '../widgets/podcast_card.dart';
 import '../widgets/category_selector_row.dart';
 import '../models/category.dart';
+import '../models/podcast.dart';
 import '../widgets/now_playing_screen_widget.dart';
 
 class HomeScreenWidget extends StatefulWidget {
@@ -27,15 +28,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final basicProvider = Provider.of<BasicProvider>(context);
     final homeVM = Provider.of<HomeViewModel>(context);
     final categories = ["All", "Life", "Comedy", "Tech"];
     final selectedCategory = homeVM.selectedCategory.name;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF121212),
+      backgroundColor: const Color(0xFF1F1D2B),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF121212),
+        backgroundColor: const Color(0xFF1F1D2B),
         elevation: 0,
         centerTitle: true,
         title: const Text(
@@ -64,23 +64,86 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               ),
         ),
       ),
-
       drawer: Drawer(
-        child: ListView(
-          children: const [
-            DrawerHeader(
-              child: Text("Menu"),
-              decoration: BoxDecoration(color: Colors.blue),
-            ),
-            ListTile(leading: Icon(Icons.info), title: Text("About")),
-          ],
+        child: Container(
+          color: const Color(0xFF1F1D2B),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(color: const Color(0xFF1A1A2E)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 30,
+                      child: Icon(
+                        Icons.podcasts,
+                        color: const Color(0xFF1A1A2E),
+                        size: 40,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "Podkes",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "Your gateway to the podcast world",
+                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.info, color: Colors.white),
+                title: Text("About Us", style: TextStyle(color: Colors.white)),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: const Color(0xFF1F1D2B),
+                        title: Text(
+                          "About Us",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        content: Text(
+                          "Podkes is an app designed to help you explore and listen to your favorite podcasts. "
+                          "With a user-friendly interface and a large podcast library, we aim to provide easy access to knowledge and entertainment.",
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                        actions: [
+                          TextButton(
+                            child: Text(
+                              "Close",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child:
             homeVM.isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -113,7 +176,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     Expanded(
                       child:
                           homeVM.filteredPodcasts.isEmpty
-                              ? Center(
+                              ? const Center(
                                 child: Text(
                                   'No podcasts found.',
                                   style: TextStyle(color: Colors.white70),
@@ -122,7 +185,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                               : GridView.builder(
                                 itemCount: homeVM.filteredPodcasts.length,
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       mainAxisSpacing: 16,
                                       crossAxisSpacing: 16,
@@ -148,7 +211,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                         MaterialPageRoute(
                                           builder:
                                               (_) => NowPlayingScreenWidget(
-                                                podcast: podcast,
+                                                podcastList:
+                                                    homeVM.filteredPodcasts,
+                                                initialIndex: index,
                                               ),
                                         ),
                                       );
@@ -163,14 +228,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: 0,
-        onTap: (index) {
-          // Sayfa değişimi burada yönetilir
-        },
+        onTap: (index) {},
         backgroundColor: const Color(0xFF1A1A2E),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
-        selectedLabelStyle: TextStyle(fontSize: 12),
-        unselectedLabelStyle: TextStyle(fontSize: 12),
+        selectedLabelStyle: const TextStyle(fontSize: 12),
+        unselectedLabelStyle: const TextStyle(fontSize: 12),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
