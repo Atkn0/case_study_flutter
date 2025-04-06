@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatelessWidget {
   final TextEditingController controller;
+  final FocusNode? focusNode;
   final Function(String) onChanged;
 
-  const SearchBarWidget({required this.controller, required this.onChanged});
+  const SearchBarWidget({
+    required this.controller,
+    this.focusNode,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +25,7 @@ class SearchBarWidget extends StatelessWidget {
           Expanded(
             child: TextField(
               autofocus: false,
+              focusNode: focusNode,
               controller: controller,
               onChanged: onChanged,
               style: const TextStyle(color: Colors.white, fontSize: 14),
@@ -37,41 +43,6 @@ class SearchBarWidget extends StatelessWidget {
           Icon(Icons.search, color: Colors.white.withOpacity(0.6), size: 30),
         ],
       ),
-    );
-  }
-}
-
-class FilterChipsRow extends StatelessWidget {
-  final List<String> categories;
-  final String selectedCategory;
-  final Function(String) onCategorySelected;
-
-  const FilterChipsRow({
-    Key? key,
-    required this.categories,
-    required this.selectedCategory,
-    required this.onCategorySelected,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 12,
-      children:
-          categories.map((category) {
-            final bool isSelected = selectedCategory == category;
-            return ChoiceChip(
-              label: Text(category),
-              selected: isSelected,
-              onSelected: (_) => onCategorySelected(category),
-              selectedColor: Colors.white,
-              backgroundColor: Color(0xFF2A2A3D),
-              labelStyle: TextStyle(
-                color: isSelected ? Colors.black : Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
-            );
-          }).toList(),
     );
   }
 }

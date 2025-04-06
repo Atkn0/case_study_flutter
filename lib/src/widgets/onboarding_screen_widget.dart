@@ -5,6 +5,24 @@ import '../viewmodels/onboarding_viewmodel.dart';
 import 'home_screen_widget.dart';
 
 class OnboardingScreenWidget extends StatelessWidget {
+  final List<Map<String, String>> onboardingData = [
+    {
+      'image': 'assets/images/first.png',
+      'title': 'Welcome to Podkes',
+      'subtitle': 'Discover trending podcasts every day',
+    },
+    {
+      'image': 'assets/images/first.png',
+      'title': 'Curated Categories',
+      'subtitle': 'Life, Tech, Comedy and much more',
+    },
+    {
+      'image': 'assets/images/first.png',
+      'title': 'Easy Playback',
+      'subtitle': 'Stream or download your favorite episodes',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     final onboardingVM = Provider.of<OnboardingViewModel>(context);
@@ -13,65 +31,56 @@ class OnboardingScreenWidget extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            flex: 7,
-            child: PageView(
+            flex: 8,
+            child: PageView.builder(
               controller: onboardingVM.pageController,
               onPageChanged: onboardingVM.onPageChanged,
-              children: [
-                Container(
-                  color: Color(0xFF1E1E1E),
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/onboarding_image.png',
-                      fit: BoxFit.contain,
-                    ),
+              itemCount: onboardingData.length,
+              itemBuilder: (context, index) {
+                final data = onboardingData[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        data['image']!,
+                        fit: BoxFit.contain,
+                        height: 300,
+                      ),
+                      const SizedBox(height: 32),
+                      Text(
+                        data['title']!,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        data['subtitle']!,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 14,
+                          height: 1.4,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                ),
-                Container(
-                  color: Color(0xFF1E1E1E),
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/onboarding_image.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Color(0xFF1E1E1E),
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/onboarding_image.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Welcome to Podkes',
-                  style: TextStyle(color: Colors.white, fontSize: 24),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Your daily podcast companion',
-                  style: TextStyle(color: Colors.white70, fontSize: 16),
-                ),
-              ],
+                );
+              },
             ),
           ),
           Expanded(
             flex: 1,
             child: DotsIndicator(
-              dotsCount: onboardingVM.totalPages,
+              dotsCount: onboardingData.length,
               position: onboardingVM.currentIndex.toDouble(),
               decorator: DotsDecorator(
-                activeColor: Colors.white,
+                activeColor: Color(0xFF525298),
                 color: Colors.white54,
                 size: Size(8.0, 8.0),
                 activeSize: Size(10.0, 10.0),
@@ -82,10 +91,10 @@ class OnboardingScreenWidget extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               child: ElevatedButton(
                 onPressed: () {
-                  if (onboardingVM.currentIndex < onboardingVM.totalPages - 1) {
+                  if (onboardingVM.currentIndex < onboardingData.length - 1) {
                     onboardingVM.nextPage();
                   } else {
                     onboardingVM.onDone();
@@ -100,17 +109,19 @@ class OnboardingScreenWidget extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                  padding: EdgeInsets.all(12),
-                  minimumSize: Size(60, 60),
+                  padding: const EdgeInsets.all(12),
+                  minimumSize: const Size(60, 60),
                 ),
-                child: Icon(Icons.arrow_forward, color: Color(0xFF525298)),
+                child: const Icon(
+                  Icons.arrow_forward,
+                  color: Color(0xFF525298),
+                ),
               ),
             ),
           ),
-
-          SizedBox(height: 16),
+          const SizedBox(height: 36),
         ],
       ),
     );
